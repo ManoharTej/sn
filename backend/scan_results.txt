@@ -1,0 +1,557 @@
+﻿
+######################################################################
+# PDF: 1_CSA_Quick_Revision_Dump.pdf (7330 chars)
+######################################################################
+
+--- FIRST 2000 CHARS ---
+CSA Quick Revision Dump 
+Built from your uploaded question sets. 
+ 
+1. A Service Catalog may include which components? 
+A. Order Guides, Exchange Rates, Calendars 
+B. Order Guides, Catalog Items, and Interceptors 
+C. Catalog Items, Asset Contracts, Task Surveys 
+D. Record Producers, Order Guides, and Catalog Items 
+  Answer: D 
+One-line: Service Catalog core components are Catalog Items, Order Guides, and Record 
+Producers. 
+ 
+2. What happens when coalesce fields match during import? 
+A. Existing record updated 
+B. No Transform Map created 
+C. New record created 
+D. Existing record updated if no match 
+  Answer: A 
+One-line: Coalesce updates existing records when a match is found. 
+ 
+3. What does a metric do? 
+A. Homepage gauge 
+B. Time measurement for workflows/SLAs 
+C. Measures ITSM effectiveness 
+D. Comparative flow measurement 
+  Answer: B 
+One-line: Metrics measure time-based performance like SLA durations. 
+ 
+4. What controls variable display sequence in Catalog Items? 
+
+A. Default Value 
+B. Sequence 
+C. Order field 
+D. Choice field 
+  Answer: C 
+One-line: Variable order is controlled using the Order field. 
+ 
+5. Reports can be created from? (Choose 2) 
+A. List column heading 
+B. Metrics module 
+C. Statistics module 
+D. View/Run module 
+  Answers: A, D 
+One-line: Reports are commonly created from list headers and View/Run module. 
+ 
+6. Knowledge Base search results can be sorted by? (Choose 3) 
+A. Most recent update 
+B. Popularity 
+C. Relevancy 
+D. Manager assignment 
+E. Number of views 
+  Answers: A, B, C 
+One-line: KB articles are sorted by relevance, popularity, and recency. 
+ 
+7. Path to fulfillment task list? 
+A. RITM > REQ > PROCUREMENT 
+B. REQ > RITM > PROCUREMENT 
+C. REQ > RITM > TASK 
+D. FULFILLMENT > RITM > TASK 
+  Answer: C 
+One-line: Request flow is REQ ? RITM ? TASK. 
+
+ 
+8. Menus/modules accessed quickly and often are called? 
+A. Breadcrumb 
+B. Favorite 
+C. Tag 
+D. Bookmark 
+  Answer: B 
+One-line: Favorites store frequently used modules and menus.
+
+--- MIDDLE SAMPLE (1000 chars) ---
+n completed update sets 
+  Answer: A 
+One-line: Never use Default Update Set for migrations. 
+ 
+18. What initiates a Flow? 
+A. Trigger 
+B. Core Action 
+C. Spoke 
+D. Event 
+  Answer: A 
+One-line: Every flow starts with a Trigger. 
+ 
+
+19. Characteristic of Catalog variables? 
+A. Only in Record Producers 
+B. Only in Order Guides 
+C. Cannot affect price 
+D. Global by default 
+  Answer: D 
+One-line: Service Catalog variables are global by default. 
+ 
+20. Column Context Menu does what? 
+A. Quick reports/configure/export 
+B. Filtering/tags/search 
+C. List filtering/viewing 
+D. Form relationship actions 
+  Answer: A 
+One-line: Column context menus support reporting, configuration, and export actions. 
+ 
+21. Module to create Notifications? 
+A. System Notification > Email > Notifications 
+B. Administration > Notification Overview 
+C. System Properties > Email 
+D. User Preferences > Notifications 
+  Answer: A 
+One-line: Notifications are created under System Notification ? Email. 
+ 
+22. KPI signa
+
+--- LAST 1500 CHARS ---
+ to import knowledge articles? 
+A. sn_knowledge_import 
+B. sn_knowledge_contribute 
+C. Can contribute 
+D. Can import 
+  Answer: A 
+One-line: sn_knowledge_import role allows KB article imports. 
+ 
+29. Relationship between Incident and Task tables? 
+A. Many-to-many 
+B. One-to-many 
+C. Incident extends Task 
+D. Related via INC number 
+  Answer: C 
+One-line: Incident is a child table extending Task. 
+ 
+30. Records created after catalog order? (Choose 2) 
+A. sc_task 
+B. sc_req_item 
+C. Change 
+D. Incident 
+E. Problem 
+  Answers: A, B 
+One-line: Catalog orders create Requested Items and Catalog Tasks. 
+
+ 
+31. How to show Save button on form header? 
+A. Turn on glide.ui.advanced 
+B. Form Design 
+C. Turn on Save property 
+D. Form Layout 
+  Answer: A 
+One-line: glide.ui.advanced enables additional form controls. 
+ 
+32. How do flows reference record data? 
+A. Drag table icon 
+B. Condition Builder 
+C. Source table on pill list 
+D. Drag Data Pill 
+  Answer: D 
+One-line: Flow Designer uses Data Pills for referencing data. 
+ 
+33. Technique for accessing referenced fields across tables? 
+A. Table-Walking 
+B. Sys_ID Pulling 
+C. Dot-Walking 
+D. Record-Hopping 
+  Answer: C 
+One-line: Dot-walking retrieves data through reference fields. 
+ 
+34. Ways to assign task to yourself? (Choose 2) 
+A. Person icon 
+B. Edit Assigned To 
+C. Assign To Me from list header 
+D. Right-click ? Assign to me 
+E. Assign from form 
+
+  Answers: C, D 
+One-line: Tasks can be self-assigned directly from list actions. 
+ 
+
+
+
+--- PATTERN DETECTION ---
+  N. format (1. 2.): 34 hits
+  A. B. options: 135 hits
+
+
+######################################################################
+# PDF: 1_DOC-20250322-WA0013._(1).pdf (340784 chars)
+######################################################################
+
+--- FIRST 2000 CHARS ---
+1. What section on a task record would you use to see the most recent update made to a 
+record? 
+i) 
+Journal 
+ii) Timeline 
+iii) update log 
+iv) audit log 
+v) diary 
+vi) Activity 
+vii) activity 
+2. What are examples of UI actions, relating to lists? choose four answers? 
+a) List buttons 
+b) list context menu 
+c) list choices 
+d) list links 
+e) list control 
+f) lists overwrite 
+3. which feature allows you to automate business logic for a particular application or 
+process such as approvals, task, notifications, and record Operations? 
+a) Flows 
+b) Action sequence 
+c) Flow diagrams 
+d) action sets 
+e) task flows 
+4. when a Flow runs an action, it generates a runtime value, which stays the same for the 
+duration of the flow. what is the name of that runtime value? 
+a) data pill runtime value 
+b) sequence runtime value 
+c) starting runtime value 
+d) trigger runtime value 
+e) input runtime value 
+5. the employee on-boarding team has asked for a way for managers to order computers, 
+monitors, business cards, and cell phones for new employees. how would you proceed 
+to meet this requirement? 
+a) create order guide 
+b) create requested item 
+c) create record producer 
+d) create on boarding bot 
+6. which resource would you use to determine if a specific user could contribute to a 
+particular knowledge base? 
+a) User criteria diagnostics 
+b) Sn_kb_author role 
+c) User criteria job log 
+d) knowledge author group 
+e) KB author group 
+7. If a knowledge base has no access details specified. what users are able to read articles 
+in that knowledge base? 
+a) no users 
+b) itil users 
+
+c) users with kb_user role 
+d) any user with an articles for permalink 
+e) any active user 
+8. while showing a customer their incident form, they ask to change the priority field title 
+to display their internal terminology Pvalue. how would you do that? choose two 
+answers? 
+a) right click on priority and select configure dictionary 
+b) right click on priority and select configure label 
+c) right click
+
+--- MIDDLE SAMPLE (1000 chars) ---
+rome-application-development/page/script/business-rules/ 
+reference/r_HowBusinessRulesWork.html 
+ 
+QUESTION 152 
+What are different types of Data Sources, which may be imported into ServiceNow? (Choose four.) 
+ 
+A. Local Sources (i.e. XML, CSV, Excel) 
+B. Implementation Spoke 
+C. DataHub 
+D. JDBC Connection 
+E. Network Server 
+F. LDAP Connection 
+ 
+Correct Answer: ADEF 
+Section: (none) 
+Explanation 
+ 
+Explanation/Reference: 
+Reference: https://developer.servicenow.com/dev.do#!/learn/learning-plans/quebec/ 
+servicenow_administrator/app_store_learnv2_importingdata_quebec_data_sources 
+ 
+QUESTION 153 
+What are the components that make up a filter condition? (Choose three.) 
+
+A. Operator 
+B. Match Criteria 
+C. Value 
+D. Column 
+E. Field 
+ 
+Correct Answer: ACE 
+Section: (none) 
+Explanation 
+ 
+Explanation/Reference: 
+Reference: https://docs.servicenow.com/bundle/rome-platform-user-interface/page/use/using-lists/concept/ 
+c_Filters.html 
+ 
+QUESTION 154 
+When impersonating a user for testing p
+
+--- LAST 1500 CHARS ---
+ category and subcategory 
+3. Setting a user and assignment group based on short description 
+4. Setting an assignment group based on category and subcategory 
+ 
+Which of the following are four ways team members can collaborate on tasks? 
+User presence 
+Activity stream 
+Work notes 
+Connect chat 
+ 
+When configuring an email notification, where can you choose field values from the record to include in the message? 
+Select variables 
+ 
+Which feature allows users to manage which notifications they receive about various activities occurring on the 
+platform? 
+Subscriptions 
+ 
+Where can users set their notification subscription preferences? 
+System settings 
+ 
+ 
+Which of the following are valid report sharing options? 
+publish 
+export to pdf 
+share 
+add to dashboard 
+schedule 
+ 
+What is the recommended way to share a report? 
+Share the report 
+ 
+By default, a report is shared with: 
+The report creator only 
+ 
+ 
+Which feature allows end users to post questions and other questions? 
+Social Q&A 
+ 
+ 
+What item in the Knowledge Management Service Portal displays articles that have the highest percentage of users 
+marking them helpful? 
+Most useful 
+
+ 
+What is the best way to share a knowledge article with another user? 
+a permalink 
+ 
+ 
+Which of the following are possible methods of populating a knowledge base with knowledge articles? 
+Integrating with a WebDAV compliant source 
+Creating articles directly in the platform 
+Importing Microsoft word files 
+ 
+ 
+Benefits of using spokes 
+ 
+
+
+
+--- PATTERN DETECTION ---
+  NO.N format: 190 hits
+  N. format (1. 2.): 551 hits
+  Question N: 360 hits
+  a) b) options: 2607 hits
+  A. B. options: 2078 hits
+  i) ii) options: 24 hits
+  Answer: X: 111 hits
+  Correct Answer: 212 hits
+  Q&A (question+answer no opts): 39 hits
+
+
+######################################################################
+# PDF: 1_FINAL_csa_PDF.pdf (146169 chars)
+######################################################################
+
+--- FIRST 2000 CHARS ---
+1. What section on a task record would you use to see the most recent 
+update made to a record? 
+i) Journal 
+ii) Timeline 
+iii) update log 
+iv) audit log 
+v) diary 
+vi) 
+activity 
+2. What are examples of UI actions, relating to lists? 
+choose four answers? a) List buttons 
+b) list context 
+menu c) list 
+choices 
+d) list links 
+e) list control 
+f) lists overwrite 
+3. which feature allows you to automate business logic for a particular 
+application or process such as approvals, task, notifications, and record 
+Operations? 
+a) Flows 
+b) Action sequence 
+c) Flow diagrams 
+d) action sets 
+e) task flows 
+4. when a Flow runs an action, it generates a runtime value, which 
+stays the same for the duration of the flow. what is the name of that 
+runtime value? 
+a) data pill runtime value 
+b) sequence runtime value 
+c) starting runtime value 
+d) trigger runtime value 
+e) input runtime value 
+5. the employee on-boarding team has asked for a way for managers to 
+order computers, monitors, business cards, and cell phones for new 
+employees. how would you proceed to meet this requirement? 
+a) create order guide 
+b) create requested item 
+c) create record producer 
+d) create on boarding bot 
+6. which resource would you use to determine if a specific user could 
+contribute to a particular knowledge base? 
+a) User criteria diagnostics 
+
+b) Sn_kb_author role 
+c) User criteria job log 
+d) knowledge author group 
+e) KB author group 
+7. If a knowledge base has no access details specified. what users are able 
+to read articles in that knowledge base? 
+a) no users 
+b) itil users 
+c) users with kb_user roleproduct 
+
+d) any user with an articles for 
+permalink e) any active user 
+8. while showing a customer their incident form, they ask to change the 
+priority field title to display their internal terminology Pvalue. how 
+would you do that? choose two answers? 
+ 
+c) right click on priority and select configure display settings 
+d) right click on priority and select configure column 
+9. what a
+
+--- MIDDLE SAMPLE (1000 chars) ---
+ble in the 
+database? 
+A. [sys_master_db] 
+B. [sys_db_object] 
+C. 
+[sys_master_object] 
+D. [sys_object_db] 
+Answer: B 
+ 
+NO.52 Which technique is used to get information from a series of referenced 
+fields from different tables? 
+A. Table-Walking 
+B. Sys_ID Pulling 
+C. 
+Dot-Walking 
+D. Record-Hopping 
+
+Answer: C 
+ 
+NO.53 Which one of these applications is available to all users? 
+A. Change 
+B. Incident 
+C. 
+Facilities 
+D. Self-Service 
+Answer: D 
+ 
+NO.54 Tables are made up of which of the following? 
+A. records 
+B. lists 
+C. 
+forms. 
+D. fields 
+Answer: A D 
+ 
+NO.55 A knowledge article must be which of the following states to display to 
+a user? 
+A. Published 
+B. Drafted 
+C. 
+Retired 
+D. Reviewed 
+Answer: A 
+ 
+NO.56 What are the 6 methods available for user authentication? 
+A. Local Database: The user name and password in their user record in the instance 
+database. 
+B. Multifactor: The user name and password in the database and passcode sent to the 
+user's mobile device that has Google
+
+--- LAST 1500 CHARS ---
+used to prevent modification of key 
+security settings and resources. The Security Administrator role is not inherited by 
+the admin role and must be explicitly assigned.  
+ Access Control Lists: Prevents modification of sensitive and platform-level 
+resources in prior versions.  
+ Property Access Control: Enables the ability to set read and write roles to 
+individual properties in order to prevent modification.  
+ Elevated Privilege: Allows users to operate in the context of a normal user and 
+elevate to higher security role when needed.  
+ Transaction and system logs are read only.  
+89. Data inconsistency correction is done from automated? 
+Ans. 
+IX. 
+Plugin 
+
+X. 
+Configurations 
+XI. 
+Workflow 
+XII. 
+None of these 
+90. Workflow editor and Service catalog differs in approval methodology? 
+Ans. True 
+91. If a split is added in a form, how many columns get created? 
+Ans. Two 
+92. Icon of reference? 
+Ans. icon (
+) 
+93. Application Navigation Search history is stored somewhere or not? 
+Ans. No 
+94. Upgrade of instance, which is true? 
+i) As an SN Admin, you will manually do it 
+ii) It happens once in a year at 8 pm  
+iii) Customizations are lost? 
+95. Data Dictionary is used for? 
+Ans. Database Structure 
+96. Import Sets characteristics 
+97. How to change Homepage Color? 
+Ans. CSS 
+98. ESS can access- 
+Ans.  My Items, My requests, KB 
+99. ACL applies on? 
+Ans.  Fields and tables 
+100. Contextual Security-Question on hierarchy 
+Ans.  Generic to specific 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+
+
+
+--- PATTERN DETECTION ---
+  NO.N format: 95 hits
+  N. format (1. 2.): 572 hits
+  a) b) options: 896 hits
+  A. B. options: 388 hits
+  i) ii) options: 16 hits
+  1) 2) 3) options: 3 hits
+  Answer: X: 92 hits
+  Ans. / Ans:: 217 hits
+  Q&A (question+answer no opts): 150 hits
+
