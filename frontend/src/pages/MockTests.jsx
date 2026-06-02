@@ -207,6 +207,7 @@ function ActiveTestScreen({ test, onComplete }) {
   const [answers, setAnswers]       = useState({})   // questionId → { answer, marked }
   const [revealed, setRevealed]     = useState({})   // questionId → { isCorrect, correctAnswer, explanation }
   const [submitting, setSubmitting] = useState(false)
+  const [finishing, setFinishing]   = useState(false)
   const [elapsed, setElapsed]       = useState(0)
   const timerRef = useRef(null)
   const maxSecs  = test.duration_minutes * 60
@@ -235,10 +236,24 @@ function ActiveTestScreen({ test, onComplete }) {
   const secs   = String(remaining % 60).padStart(2, '0')
   const urgent = remaining < 120
 
-  const handleSelectOption = (opt) => {
+  const handleSelectOption = async (opt) => {
     if (revealed[q.id] || submitting) return
+    
+    // Update local state immediately for UI responsiveness
     const prev = answers[q.id]
     setAnswers({ ...answers, [q.id]: { answer: opt, marked: prev?.marked || false } })
+    
+    // Auto-submit to backend so it counts even if "Check Answer" isn't clicked
+    try {
+      await testsApi.submitAnswer(test.id, {
+        question_id: q.id,
+        answer: opt,
+        time_spent_seconds: elapsed,
+        is_marked: prev?.marked || false,
+      })
+    } catch (e) {
+      console.error("Failed to auto-save answer", e)
+    }
   }
 
   const handleCheckAnswer = async () => {
@@ -283,12 +298,24 @@ function ActiveTestScreen({ test, onComplete }) {
   }
 
   const handleFinish = async () => {
+    if (finishing) return
+    setFinishing(true)
     clearInterval(timerRef.current)
     try {
       const { data } = await testsApi.complete(test.id, elapsed)
       onComplete(data)
-    } catch {
-      toast.error('Failed to complete test')
+    } catch (e) {
+      setFinishing(false)
+      const detail = e.response?.data?.detail
+      if (detail === 'Test already completed') {
+        toast.success('Test was already submitted!')
+        // If already completed, we can't get results easily here without another fetch, 
+        // but we can at least stop the timer and go back.
+        window.location.href = '/'
+        return
+      }
+      timerRef.current = setInterval(() => setElapsed(e => e + 1), 1000)
+      toast.error(detail || 'Failed to complete test. Please try again.')
     }
   }
 
@@ -306,6 +333,9 @@ function ActiveTestScreen({ test, onComplete }) {
 
       {/* Top bar */}
       <div style={{ background: '#ffffff', borderBottom: '2px solid var(--sn-green)', padding: '0.75rem 1.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem', flexShrink: 0 }}>
+        <button className="btn-ghost" onClick={() => window.location.href = '/'} style={{ padding: '0.4rem', borderRadius: 8 }}>
+          <ChevronLeft size={20} />
+        </button>
         <div style={{ fontWeight: 800, color: '#0f2419', fontSize: '0.9rem', flex: 1 }}>
           {test.title}
         </div>
@@ -325,8 +355,8 @@ function ActiveTestScreen({ test, onComplete }) {
           <span style={{ color: '#dc2626', fontWeight: 700 }}>✗ {Object.values(revealed).filter(r => r.is_correct === false).length}</span>
           {markedCount > 0 && <span style={{ color: '#d97706', fontWeight: 700 }}>⚑ {markedCount}</span>}
         </div>
-        <button className="btn-ghost" onClick={handleFinish} style={{ fontSize: '0.8rem' }}>
-          Finish Test
+        <button className="btn-primary" onClick={handleFinish} disabled={finishing} style={{ fontSize: '0.8rem', minWidth: 100, justifyContent: 'center' }}>
+          {finishing ? <Loader size={14} className="spin" /> : 'Finish Test'}
         </button>
       </div>
 
@@ -465,8 +495,8 @@ function ActiveTestScreen({ test, onComplete }) {
 
           <div style={{ marginTop: '1rem', paddingTop: '1rem', borderTop: '1px solid var(--border)' }}>
             <button className="btn-primary" style={{ width: '100%', justifyContent: 'center', fontSize: '0.82rem' }}
-              onClick={handleFinish}>
-              Submit Test
+              onClick={handleFinish} disabled={finishing}>
+              {finishing ? <Loader size={14} className="spin" /> : 'Submit Test'}
             </button>
             <div style={{ textAlign: 'center', marginTop: '0.5rem', fontSize: '0.72rem', color: 'var(--text-muted)' }}>
               {answeredCount}/{testQs.length} answered
@@ -523,9 +553,12 @@ function ResultsScreen({ result, onRetry }) {
       </div>
 
       {/* Actions */}
-      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1.5rem', justifyContent: 'center' }}>
-        <button className="btn-primary" onClick={onRetry}>
+      <div style={{ display: 'flex', gap: '1rem', marginBottom: '1.5rem', justifyContent: 'center' }}>
+        <button className="btn-primary" onClick={onRetry} style={{ minWidth: 180, justifyContent: 'center' }}>
           <RotateCcw size={15} /> Take Another Test
+        </button>
+        <button className="btn-ghost" onClick={() => window.location.href = '/'} style={{ minWidth: 180, justifyContent: 'center', border: '1px solid var(--border)' }}>
+          <CheckCircle2 size={15} /> Back to Dashboard
         </button>
       </div>
     </div>

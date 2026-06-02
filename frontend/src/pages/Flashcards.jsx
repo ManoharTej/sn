@@ -27,7 +27,32 @@ const flipStyles = `
     padding: 2rem;
   }
   .flip-back { transform: rotateY(180deg); }
+  .markdown-content ul { margin: 0.5rem 0; padding-left: 1.2rem; text-align: left; }
+  .markdown-content li { margin-bottom: 0.3rem; }
+  .markdown-content strong { color: #ffffff; }
 `
+
+function MarkdownSimple({ text }) {
+  if (!text) return null
+  // Simple bold: **text** -> <strong>text</strong>
+  // Simple bullets: * text -> <li>text</li>
+  const html = text
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .split('\n')
+    .map(line => {
+      if (line.trim().startsWith('* ')) {
+        return `<li>${line.trim().substring(2)}</li>`
+      }
+      if (line.trim().startsWith('- ')) {
+        return `<li>${line.trim().substring(2)}</li>`
+      }
+      return line.trim() ? `<p>${line}</p>` : ''
+    })
+    .join('')
+    .replace(/(<li>.*?<\/li>)+/g, '<ul>$&</ul>')
+
+  return <div className="markdown-content" dangerouslySetInnerHTML={{ __html: html }} />
+}
 
 // ── Flashcard component ───────────────────────────────────────────────────────
 function FlashCard({ card, onCorrect, onWrong, onSkip }) {
@@ -82,10 +107,10 @@ function FlashCard({ card, onCorrect, onWrong, onSkip }) {
                 </span>
               )}
             </div>
-            <div style={{ textAlign: 'center', maxWidth: 480 }}>
-              <p style={{ fontSize: '0.95rem', color: '#e8f7ef', lineHeight: 1.7 }}>
-                {card.back.replace(/^Correct Answer:.*?\n\n/i, '').trim()}
-              </p>
+            <div style={{ textAlign: 'left', maxWidth: 480, width: '100%' }}>
+              <div style={{ fontSize: '0.95rem', color: '#e8f7ef', lineHeight: 1.6 }}>
+                <MarkdownSimple text={card.back} />
+              </div>
             </div>
             {/* Rate buttons (shown when flipped) */}
             {flipped && !answered && (

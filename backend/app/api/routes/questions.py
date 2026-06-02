@@ -14,7 +14,7 @@ from app.schemas.question import (
     FlashcardOut, FlashcardReviewRequest,
     GenerateQuestionsRequest,
 )
-from app.services.mcq_service import generate_mcqs_for_chunk
+from app.services.mcq_service import generate_mcqs_for_chunk, simplify_flashcard_answer
 
 router = APIRouter()
 
@@ -81,14 +81,22 @@ async def _generate_and_store(source_id: int, max_per_chunk: int, user_id: int):
                 db.add(q)
                 await db.flush()
 
-                # Auto-generate flashcard — front: concept question, back: full explanation
+                # Auto-generate flashcard — front: concept question, back: simplified explanation
                 correct_key = f"option_{mcq['correct_answer']}"
                 correct_text = mcq.get(correct_key, "")
+                
+                # Use simplified flashcard answer service
+                simplified_back = await simplify_flashcard_answer(
+                    mcq["question"],
+                    correct_text,
+                    mcq["explanation"]
+                )
+
                 flashcard = Flashcard(
                     user_id=user_id,
                     question_id=q.id,
                     front=mcq["question"],
-                    back=f"Correct Answer: {correct_text}\n\n{mcq['explanation']}",
+                    back=simplified_back,
                     next_review_date=datetime.now(timezone.utc),
                 )
                 db.add(flashcard)

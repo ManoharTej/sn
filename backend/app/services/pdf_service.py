@@ -68,7 +68,7 @@ def _extract_options(text: str) -> List[str]:
 
     # Try a) b) c) d) e) f) format
     matches = re.findall(
-        r'[a-f]\)\s*(.*?)(?=\n\s*[a-f]\)|\n\s*(?:Ans|Answer|Correct)|$)',
+        r'[a-f]\)\s*(.*?)(?=\s+[a-f]\)|\n\s*(?:Ans|Answer|Correct)|$)',
         text, re.IGNORECASE | re.DOTALL
     )
     if matches:
@@ -78,7 +78,7 @@ def _extract_options(text: str) -> List[str]:
 
     # Try A. B. C. D. or A) B) C) D) format (uppercase)
     matches = re.findall(
-        r'[A-G][\.\)]\s*(.*?)(?=\n\s*[A-G][\.\)]|\n\s*(?:Ans|Answer|Correct)|$)',
+        r'[A-G][\.\)]\s*(.*?)(?=\s+[A-G][\.\)]|\n\s*(?:Ans|Answer|Correct)|$)',
         text, re.DOTALL
     )
     if matches:
@@ -87,7 +87,7 @@ def _extract_options(text: str) -> List[str]:
             return opts[:7]
 
     # Try i) ii) iii) iv) v) vi) format
-    roman_pat = r'(?:vi|iv|v|iii|ii|i)\)\s*(.*?)(?=\n\s*(?:vi|iv|v|iii|ii|i)\)|\n\s*(?:Ans|Answer)|$)'
+    roman_pat = r'(?:vi|iv|v|iii|ii|i)\)\s*(.*?)(?=\s+(?:vi|iv|v|iii|ii|i)\)|\n\s*(?:Ans|Answer)|$)'
     matches = re.findall(roman_pat, text, re.IGNORECASE | re.DOTALL)
     if matches:
         opts = [re.sub(r'\s+', ' ', m).strip() for m in matches if m.strip()]
@@ -177,7 +177,7 @@ def _add_question(questions: list, existing_qs: set, q_text: str, opts: list, an
 def _parse_block(block_text: str, questions: list, existing_qs: set):
     """Parse a single question block and extract question + options + answer."""
     opt_start = None
-    for pat in [r'\n\s*a\)', r'\n\s*A[\.\)]', r'\n\s*i\)']:
+    for pat in [r'\s*a\)', r'\s*A[\.\)]', r'\s*i\)']:
         m = re.search(pat, block_text, re.IGNORECASE)
         if m:
             opt_start = m.start()
@@ -379,6 +379,14 @@ async def process_pdf(content_source_id: int, file_path: str, db: AsyncSession):
                 scenario_keywords = ['user', 'administrator', 'wants to', 'needs to', 'how would you', 'company', 'client', 'suppose', 'scenario', 'manager']
                 is_scenario = any(kw in text_lower for kw in scenario_keywords) or len(q_data["question"]) > 180
                 
+                # Check if it needs AI enrichment (Issue 1 & 2)
+                # If option_b is "Not applicable", it was a short Q&A
+                if q_data.get("option_b") == "Not applicable":
+                    from app.services.mcq_service import enrich_question, simplify_flashcard_answer
+                    enriched = await enrich_question(q_data["question"], q_data["option_a"], is_scenario)
+                    if enriched:
+                        q_data.update(enriched)
+                
                 db_q = Question(
                     user_id=source.user_id,
                     content_source_id=source.id,
@@ -396,11 +404,21 @@ async def process_pdf(content_source_id: int, file_path: str, db: AsyncSession):
                 db.add(db_q)
                 await db.flush()
                 
+                # Use simplified flashcard answer service
+                ans_map = {'a': db_q.option_a, 'b': db_q.option_b, 'c': db_q.option_c, 'd': db_q.option_d}
+                correct_text = ans_map.get(db_q.correct_answer.lower(), db_q.option_a)
+                
+                simplified_back = await simplify_flashcard_answer(
+                    db_q.question_text,
+                    correct_text,
+                    db_q.explanation
+                )
+
                 flashcard = Flashcard(
                     user_id=source.user_id,
                     question_id=db_q.id,
                     front=db_q.question_text,
-                    back=db_q.explanation,
+                    back=simplified_back,
                     next_review_date=datetime.now(timezone.utc),
                 )
                 db.add(flashcard)
