@@ -41,7 +41,14 @@ async def update_progress_after_test(test_id: int, user_id: int, db: AsyncSessio
     )
     prog = prog_result.scalar_one_or_none()
     if not prog:
-        prog = UserProgress(user_id=user_id)
+        prog = UserProgress(
+            user_id=user_id,
+            total_tests=0,
+            total_questions=0,
+            total_correct=0,
+            overall_accuracy=0.0,
+            streak_days=0
+        )
         db.add(prog)
 
     prog.total_tests     += 1
@@ -91,7 +98,15 @@ async def update_progress_after_test(test_id: int, user_id: int, db: AsyncSessio
         )
         tp = tp_result.scalar_one_or_none()
         if not tp:
-            tp = TopicProgress(user_id=user_id, topic_id=topic_id, topic_name=tname)
+            tp = TopicProgress(
+                user_id=user_id,
+                topic_id=topic_id,
+                topic_name=tname,
+                total_answered=0,
+                total_correct=0,
+                accuracy_pct=0.0,
+                is_weak=False
+            )
             db.add(tp)
 
         tp.total_answered += total
@@ -110,7 +125,14 @@ async def update_progress_after_test(test_id: int, user_id: int, db: AsyncSessio
     )
     da = da_result.scalar_one_or_none()
     if not da:
-        da = DailyActivity(user_id=user_id, date=today_str)
+        da = DailyActivity(
+            user_id=user_id,
+            date=today_str,
+            questions_done=0,
+            tests_done=0,
+            accuracy_pct=0.0,
+            minutes_studied=0
+        )
         db.add(da)
 
     da.tests_done      += 1
@@ -121,4 +143,4 @@ async def update_progress_after_test(test_id: int, user_id: int, db: AsyncSessio
     da.accuracy_pct = round(all_correct / all_q * 100, 1)
 
     await db.commit()
-    print(f"✅ Progress updated for user {user_id} after test {test_id}")
+    print(f"[OK] Progress updated for user {user_id} after test {test_id}")

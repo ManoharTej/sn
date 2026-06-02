@@ -9,3 +9,5 @@ build/
 .idea/
 *.db
 uploads/
+.venv/
+temp_frames/

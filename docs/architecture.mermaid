@@ -1,0 +1,75 @@
+graph TD
+    classDef frontend fill:#3b82f6,stroke:#1d4ed8,stroke-width:2px,color:#fff;
+    classDef backend fill:#10b981,stroke:#047857,stroke-width:2px,color:#fff;
+    classDef database fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff;
+    classDef external fill:#8b5cf6,stroke:#6d28d9,stroke-width:2px,color:#fff;
+
+    %% User Layer
+    User["👤 Student (Web Browser)"] -->|HTTPS / WebSocket| FE
+
+    %% Frontend App Shell
+    subgraph FrontendApp ["Frontend (React 18 + Vite + Tailwind v4)"]
+        FE["🖥️ UI Router / App Shell"]
+        DB_Page["Dashboard View"] --- FE
+        Lib_Page["Content Library"] --- FE
+        Test_Page["Mock Test Interface"] --- FE
+        Card_Page["Flashcards Grid"] --- FE
+        Tutor_Page["AI Tutor Chat UI"] --- FE
+        Prog_Page["Progress & Analytics Dashboard"] --- FE
+    end
+    class FrontendApp,FE,DB_Page,Lib_Page,Test_Page,Card_Page,Tutor_Page,Prog_Page frontend;
+
+    %% Backend Services
+    subgraph BackendAPI ["Backend Service (FastAPI)"]
+        BE["⚙️ FastAPI Core / API Gateway"]
+        
+        subgraph Auth ["Authentication Module"]
+            JWT["JWT Manager (Bcrypt)"]
+        end
+        
+        subgraph Pipeline ["AI / RAG Pipeline"]
+            Extract["PDF Extractor (PyMuPDF)"]
+            Gen["MCQ / Flashcard Generator"]
+            RAG["RAG Search & Retrieval Engine"]
+        end
+        
+        subgraph Services ["Core Engine Services"]
+            Adapt["Adaptive Testing Engine"]
+            Spaced["Spaced Repetition Scheduler"]
+            Stats["Progress & Metrics Calculator"]
+        end
+    end
+    class BackendAPI,BE,JWT,Extract,Gen,RAG,Adapt,Spaced,Stats backend;
+
+    %% Data Store
+    subgraph DataStore ["Data Storage (Local Mode)"]
+        SQL_DB[("🗄️ SQLite DB (csa_training.db)<br>- Users & Progress Logs<br>- MCQs & Flashcards<br>- Mock Test Sessions")]
+        V_DB[("🔀 Vector Store (ChromaDB / Memory)<br>- Context Chunk Embeddings")]
+    end
+    class DataStore,SQL_DB,V_DB database;
+
+    %% AI Models / External
+    subgraph AIServices ["External Providers & Models"]
+        Groq["⚡ Groq API<br>(llama-3.3-70b-versatile)"]
+        Gemini["♊ Gemini Pro API<br>(gemini-1.5-flash)"]
+        Embed["🧮 sentence-transformers<br>(Local Embeddings)"]
+    end
+    class AIServices,Groq,Gemini,Embed external;
+
+    %% Data Flow / Connections
+    FE -->|JSON Requests| BE
+    FE -->|WebSocket| BE
+    
+    BE --> Auth
+    BE --> Pipeline
+    BE --> Services
+
+    Pipeline --> SQL_DB
+    Pipeline --> V_DB
+    Services --> SQL_DB
+    
+    RAG --> Embed
+    Gen --> Groq
+    Gen --> Gemini
+    RAG --> Groq
+    RAG --> Gemini
